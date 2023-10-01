@@ -1,6 +1,6 @@
 // import "./styles.css";
 import { useState } from "react";
-import "../styles/textexpander.css";
+// import "../styles/textexpander.css";
 
 export const TextExpanderWidget = ({
   collapsedNumWords = 10,

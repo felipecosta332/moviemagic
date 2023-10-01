@@ -57,10 +57,17 @@ export const Home = () => {
   const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState([]);
 
+  const query = "interstellar";
+
   useEffect(() => {
-    fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=interstellar`)
-      .then((response) => response.json())
-      .then((data) => setMovies(data.Search));
+    async function fetchMovies() {
+      const response = await fetch(
+        `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
+      );
+      const data = await response.json();
+      setMovies(data.Search);
+    }
+    fetchMovies();
   }, []);
 
   return (

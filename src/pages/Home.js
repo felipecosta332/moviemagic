@@ -54,18 +54,20 @@ const average = (arr) =>
 const KEY = "c1b1214";
 
 export const Home = () => {
+  const [query, setQuery] = useState("");
   const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const query = "interstellar";
-  // const query = "fawehbaseytjns";
+  const tempQuery = "interstellar";
+  // const tempQuery = "fawehbaseytjns";
 
   useEffect(() => {
     async function fetchMovies() {
       try {
         setIsLoading(true);
+        setError("");
         const response = await fetch(
           `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
         );
@@ -75,8 +77,10 @@ export const Home = () => {
 
         const data = await response.json();
         if (data.Response === "False") throw new Error("Movie not found");
-        
+
         setMovies(data.Search);
+        console.log(data.Search);
+        console.dir(data.Search);
       } catch (error) {
         console.error(error.message);
         setError(error.message);
@@ -84,20 +88,25 @@ export const Home = () => {
         setIsLoading(false);
       }
     }
+    if (query.length < 3) {
+      setMovies([]);
+      setError("");
+      return;
+    }
     fetchMovies();
-  }, []);
+  }, [query]);
 
   return (
     <>
       <NavBar>
-        <Search />
+        <Search query={query} setQuery={setQuery} />
         <NumResults movies={movies} />
       </NavBar>
       <Main>
         <Box>
           {/*isLoading ? <Loader /> : <MovieList movies={movies} />*/}
           {isLoading && <Loader />}
-          {isLoading && !error && <MovieList movies={movies} />}
+          {!isLoading && !error && <MovieList movies={movies} />}
           {error && <ErrorMessage message={error} />}
         </Box>
         <Box>
@@ -146,8 +155,7 @@ function NumResults({ movies }) {
   );
 }
 
-function Search() {
-  const [query, setQuery] = useState("");
+function Search({ query, setQuery }) {
   return (
     <input
       className="search"

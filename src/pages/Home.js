@@ -10,7 +10,7 @@ import {
   Box,
   MovieList,
   MovieDetails,
-  WatchedMoviesList
+  WatchedMoviesList,
 } from "../components";
 import "../styles/index.css";
 
@@ -41,12 +41,17 @@ export const Home = () => {
   }
 
   useEffect(() => {
+    const controller = new AbortController();
+
     async function fetchMovies() {
       try {
         setIsLoading(true);
         setError("");
         const response = await fetch(
-          `http://www.omdbapi.com/?apikey=${API_KEY}&s=${query}`
+          `http://www.omdbapi.com/?apikey=${API_KEY}&s=${query}`,
+          {
+            signal: controller.signal,
+          }
         );
 
         if (!response.ok)
@@ -56,9 +61,12 @@ export const Home = () => {
         if (data.Response === "False") throw new Error("Movie not found");
 
         setMovies(data.Search);
+        setError("");
       } catch (error) {
         console.error(error.message);
-        setError(error.message);
+        if (error.name !== "AbortError") {
+          setError(error.message);
+        }
       } finally {
         setIsLoading(false);
       }
@@ -69,6 +77,10 @@ export const Home = () => {
       return;
     }
     fetchMovies();
+
+    return () => {
+      controller.abort();
+    };
   }, [query]);
 
   return (

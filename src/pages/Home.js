@@ -76,6 +76,7 @@ export const Home = () => {
       setError("");
       return;
     }
+    handleCloseMovie();
     fetchMovies();
 
     return () => {

@@ -47,6 +47,20 @@ export const MovieDetails = ({
   }
 
   useEffect(() => {
+    const callback = (event) => {
+      if (event.code === "Escape") {
+        onCloseMovie();
+      }
+    };
+
+    document.addEventListener("keydown", callback);
+
+    return () => {
+      document.removeEventListener("keydown", callback);
+    };
+  }, [onCloseMovie]);
+
+  useEffect(() => {
     async function getMovieDetails() {
       setIsLoading(true);
       const response = await fetch(

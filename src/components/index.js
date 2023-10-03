@@ -1,2 +1,16 @@
-export { Test } from "./Test";
+export { Box } from "./Box";
+export { ErrorMessage } from "./ErrorMessage";
+export { Loader } from "./Loader";
+// export { Logo } from "./Logo";
+export { Main } from "./Main";
+export { Movie } from "./Movie";
+export { MovieDetails } from "./MovieDetails";
+export { MovieList } from "./MovieList";
+export { NavBar } from "./NavBar";
+export { NumResults } from "./NumResults";
+export { Search } from "./Search";
 export { StarRating } from "./StarRating";
+export { Test } from "./Test";
+export { WatchedMovie } from "./WatchedMovie";
+export { WatchedMoviesList } from "./WatchedMoviesList";
+export { WatchedSummary } from "./WatchedSummary";

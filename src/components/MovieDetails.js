@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { StarRating } from "./StarRating";
 import { Loader } from "./Loader";
+import { useKey } from "../hooks";
 
 const API_KEY = "c1b1214";
 
@@ -55,19 +56,7 @@ export const MovieDetails = ({
     onCloseMovie();
   }
 
-  useEffect(() => {
-    const callback = (event) => {
-      if (event.code === "Escape") {
-        onCloseMovie();
-      }
-    };
-
-    document.addEventListener("keydown", callback);
-
-    return () => {
-      document.removeEventListener("keydown", callback);
-    };
-  }, [onCloseMovie]);
+  useKey("Escape", onCloseMovie);
 
   useEffect(() => {
     async function getMovieDetails() {

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   WatchedSummary,
   Loader,
@@ -13,7 +13,7 @@ import {
   WatchedMoviesList,
 } from "../components";
 import "../styles/index.css";
-import { useMovies } from "../hooks";
+import { useLocalStorageState, useMovies } from "../hooks";
 
 // const API_KEY = "c1b1214";
 
@@ -21,13 +21,7 @@ export const Home = () => {
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState(null);
   const { movies, isLoading, error } = useMovies(query);
-  // const [movies, setMovies] = useState([]);
-  // const [isLoading, setIsLoading] = useState(false);
-  // const [error, setError] = useState("");
-  const [watched, setWatched] = useState(() => {
-    const data = JSON.parse(localStorage.getItem("watched"));
-    return data ? data : [];
-  });
+  const [watched, setWatched] = useLocalStorageState([], "watched");
 
   function handleSelectMovie(id) {
     setSelectedId((selectedId) => (id === selectedId ? null : id));
@@ -44,11 +38,6 @@ export const Home = () => {
   function handleDeleteWatched(id) {
     setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
   }
-
-  
-  useEffect(() => {
-    localStorage.setItem("watched", JSON.stringify(watched));
-  }, [watched]);
 
   return (
     <>

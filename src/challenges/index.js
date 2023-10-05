@@ -1,2 +1,3 @@
-export { TextExpanderWidget } from "./TextExpanderWidget";
 export { CurrencyConverter } from "./CurrencyConverter";
+export { Geolocation } from "./Geolocation";
+export { TextExpanderWidget } from "./TextExpanderWidget";

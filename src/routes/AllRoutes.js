@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import { Home, TestPage, TextExpanderPage } from "../pages";
-import { CurrencyConverter } from "../challenges";
+import { CurrencyConverter, Geolocation } from "../challenges";
 
 export const AllRoutes = () => {
   return (
@@ -10,6 +10,7 @@ export const AllRoutes = () => {
         <Route path="/test" element={<TestPage />} />
         <Route path="/textexpander" element={<TextExpanderPage />} />
         <Route path="/currency" element={<CurrencyConverter />} />
+        <Route path="/geolocation" element={<Geolocation />} />
       </Routes>
     </div>
   );
